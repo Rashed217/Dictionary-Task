@@ -7,6 +7,9 @@
         static Dictionary<string, int> CourseCapacity = new Dictionary<string, int>();
         static List<(string CourseCode, string StudenName)> WaitList = new List<(string CourseCode, string StudentName)> ();
 
+        static string CoursesFile = "C:\\Users\\Codeline User\\Documents\\Codeline Projects\\Files\\CoursesFile.txt";
+        static string WaitingListFile = "C:\\Users\\Codeline User\\Documents\\Codeline Projects\\Files\\WaitingListFile.txt";
+
         static void Main(string[] args)
         {
             MainMenu();
@@ -71,20 +74,20 @@
         static void AddNewCourse()
         {
             Console.Write("Enter the course code (e.g., CS101): ");
-            string courseCode = Console.ReadLine();
+            string courseCode = Console.ReadLine(); // Takes Course code input from user
 
-            if (Courses.ContainsKey(courseCode))
+            if (Courses.ContainsKey(courseCode)) // Checks if Course Code exist in the Dictionary
             {
-                Console.WriteLine($"Course {courseCode} already exists.");
+                Console.WriteLine($"Course {courseCode} already exists."); // Validation Message
                 return;
             }
 
             Console.Write("Enter the course capacity: ");
-            if (int.TryParse(Console.ReadLine(), out int capacity))
+            if (int.TryParse(Console.ReadLine(), out int capacity)) // Takes Course capacity input from user
             {
-                Courses[courseCode] = new HashSet<string>();
-                CourseCapacity[courseCode] = capacity;
-                Console.WriteLine($"Course {courseCode} added with capacity {capacity}.");
+                Courses[courseCode] = new HashSet<string>(); // Holds student registrations for the course
+                CourseCapacity[courseCode] = capacity; // Stores the capacity associated with the Course Code
+                Console.WriteLine($"Course {courseCode} added with capacity {capacity}."); // Confirmation Message
             }
             else
             {
@@ -95,17 +98,17 @@
         static void RemoveCourse()
         {
             Console.Write("Enter the course code to remove (e.g., CS101): ");
-            string courseCode = Console.ReadLine();
+            string courseCode = Console.ReadLine(); // Takes input from user
 
-            if (!Courses.ContainsKey(courseCode))
+            if (!Courses.ContainsKey(courseCode)) // Checks if Course Code exist in the Dictionary
             {
-                Console.WriteLine($"Course {courseCode} does not exist.");
+                Console.WriteLine($"Course {courseCode} does not exist."); // Validation Message
                 return;
             }
 
-            Courses.Remove(courseCode);
-            CourseCapacity.Remove(courseCode);
-            Console.WriteLine($"Course {courseCode} has been removed.");
+            Courses.Remove(courseCode); //Delete the Course Code
+            CourseCapacity.Remove(courseCode); // Delete the Course Capacity
+            Console.WriteLine($"Course {courseCode} has been removed."); // Confirmation Message
         }
 
 
