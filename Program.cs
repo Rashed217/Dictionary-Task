@@ -94,8 +94,20 @@
 
         static void RemoveCourse()
         {
+            Console.Write("Enter the course code to remove (e.g., CS101): ");
+            string courseCode = Console.ReadLine();
 
+            if (!Courses.ContainsKey(courseCode))
+            {
+                Console.WriteLine($"Course {courseCode} does not exist.");
+                return;
+            }
+
+            Courses.Remove(courseCode);
+            CourseCapacity.Remove(courseCode);
+            Console.WriteLine($"Course {courseCode} has been removed.");
         }
+
 
         static void EnrollStudentInCourse()
         {
