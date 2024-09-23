@@ -3,8 +3,9 @@
     internal class Program
     {
 
-        Dictionary<string, HashSet<string>> Courses = new Dictionary<string, HashSet<string>>();
-        List<(string CourseCode, string StudenName)> WaitList = new List<(string CourseCode, string StudentName)> ();
+        static Dictionary<string, HashSet<string>> Courses = new Dictionary<string, HashSet<string>>();
+        static Dictionary<string, int> CourseCapacity = new Dictionary<string, int>();
+        static List<(string CourseCode, string StudenName)> WaitList = new List<(string CourseCode, string StudentName)> ();
 
         static void Main(string[] args)
         {
@@ -65,6 +66,65 @@
                     break;
 
             }
+        }
+
+        static void AddNewCourse()
+        {
+            Console.Write("Enter the course code (e.g., CS101): ");
+            string courseCode = Console.ReadLine();
+
+            if (Courses.ContainsKey(courseCode))
+            {
+                Console.WriteLine($"Course {courseCode} already exists.");
+                return;
+            }
+
+            Console.Write("Enter the course capacity: ");
+            if (int.TryParse(Console.ReadLine(), out int capacity))
+            {
+                Courses[courseCode] = new HashSet<string>();
+                CourseCapacity[courseCode] = capacity;
+                Console.WriteLine($"Course {courseCode} added with capacity {capacity}.");
+            }
+            else
+            {
+                Console.WriteLine("Invalid capacity. Please enter a number.");
+            }
+        }
+
+        static void RemoveCourse()
+        {
+
+        }
+
+        static void EnrollStudentInCourse()
+        {
+
+        }
+
+        static void RemoveStudentFromCourse()
+        {
+
+        }
+
+        static void DisplayStudentsInCourse()
+        {
+
+        }
+
+        static void DisplayAllCoursesAndStudents()
+        {
+
+        }
+
+        static void FindCoursesWithCommonStudent()
+        {
+
+        }
+
+        static void WithdrawStudentFromALlCourses()
+        {
+
         }
     }
 }
