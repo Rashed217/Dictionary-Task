@@ -161,6 +161,11 @@
                 Console.WriteLine($"Course {courseCode} does not exist."); // Validation Message
                 return;
             }
+            if (Courses[courseCode].Count > 0) // Checks if there are students enrolled in the course
+            {
+                Console.WriteLine($"Cannot remove course {courseCode}. There are students enrolled in it."); // Validation Message
+                return;
+            }
 
             Courses.Remove(courseCode); //Delete the Course Code
             CoursesCapacities.Remove(courseCode); // Delete the Course Capacity
