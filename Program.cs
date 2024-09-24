@@ -37,6 +37,7 @@
 
         static void Main(string[] args)
         {
+            InitializeStartupData();
             MainMenu();
             SaveCoursesToFile();
             SaveStudentToWaitList();
@@ -193,14 +194,28 @@
 
             if (Courses.ContainsKey(studentName)) // Checks if students name exist in the course
             {
-                Courses[courseCode].Remove(studentName); // Remove student from teh course
+                Courses[courseCode].Remove(studentName); // Remove student from the course
                 Console.WriteLine($"{studentName} has been removed from {courseCode}.");
             }
         }
 
         static void DisplayStudentsInCourse()
         {
+            Console.Clear();
+            Console.Write("Enter the course code (e.g., CS101): ");
+            string courseCode = Console.ReadLine(); // Takes Course code input from user
 
+            if (!Courses.ContainsKey(courseCode)) // Check if the course exists
+            {
+                Console.WriteLine($"Course {courseCode} does not exist.");
+                return;
+            }
+
+            Console.WriteLine($"Students enrolled in {courseCode}:");
+            foreach (var student in Courses[courseCode])
+            {
+                Console.WriteLine(student); // Display each student's name
+            }
         }
 
         static void DisplayAllCoursesAndStudents()
