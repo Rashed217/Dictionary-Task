@@ -13,6 +13,8 @@
         static void Main(string[] args)
         {
             MainMenu();
+            SaveCoursesToFile();
+            SaveStudentToWaitList();
         }
 
         static void MainMenu()
@@ -73,6 +75,7 @@
 
         static void AddNewCourse()
         {
+            Console.Clear();
             Console.Write("Enter the course code (e.g., CS101): ");
             string courseCode = Console.ReadLine(); // Takes Course code input from user
 
@@ -97,6 +100,7 @@
 
         static void RemoveCourse()
         {
+            Console.Clear();
             Console.Write("Enter the course code to remove (e.g., CS101): ");
             string courseCode = Console.ReadLine(); // Takes input from user
 
@@ -114,6 +118,7 @@
 
         static void EnrollStudentInCourse()
         {
+            Console.Clear();
             Console.Write("Enter the course code (e.g., CS101): ");
             string courseCode = Console.ReadLine();
 
@@ -143,6 +148,7 @@
 
         static void RemoveStudentFromCourse()
         {
+            Console.Clear();
             Console.Write("Enter the course code (e.g., CS101): ");
             string courseCode = Console.ReadLine(); // Takes Course code input from user
 
@@ -181,5 +187,35 @@
         {
 
         }
+
+        static void SaveCoursesToFile()
+        {
+            // Save courses and their students to the CoursesFile
+            using (StreamWriter writer = new StreamWriter(CoursesFile))
+            {
+                foreach (var course in Courses)
+                {
+                    string courseCode = course.Key;
+                    HashSet<string> students = course.Value;
+                    writer.WriteLine($"{courseCode}:{string.Join(",", students)}");
+                }
+            }
+
+        }
+
+        static void SaveStudentToWaitList()
+        {
+            // Save waitlist to the WaitingListFile
+            using (StreamWriter writer = new StreamWriter(WaitingListFile))
+            {
+                foreach (var Student in WaitList)
+                {
+                    writer.WriteLine($"{Student.CourseCode}:{Student.StudenName}");
+                }
+            }
+
+            Console.WriteLine("Courses and waitlist have been saved to files.");
+        }
+
     }
 }
