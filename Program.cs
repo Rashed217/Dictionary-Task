@@ -114,12 +114,52 @@
 
         static void EnrollStudentInCourse()
         {
+            Console.Write("Enter the course code (e.g., CS101): ");
+            string courseCode = Console.ReadLine();
 
+            if (!Courses.ContainsKey(courseCode)) // Check if the course exists
+            {
+                Console.WriteLine($"Course {courseCode} does not exist.");
+                return;
+            }
+
+            Console.Write("Enter the student's name: ");
+            string studentName = Console.ReadLine();
+
+            // Check if the course capacity is full
+            if (Courses[courseCode].Count >= CourseCapacity[courseCode])
+            {
+                // Add student to waiting list
+                WaitList.Add((courseCode, studentName));
+                Console.WriteLine($"Course {courseCode} is full. {studentName} has been added to the waiting list.");
+            }
+            else
+            {
+                // Enroll the student to the course
+                Courses[courseCode].Add(studentName);
+                Console.WriteLine($"{studentName} has been enrolled in {courseCode}.");
+            }
         }
 
         static void RemoveStudentFromCourse()
         {
+            Console.Write("Enter the course code (e.g., CS101): ");
+            string courseCode = Console.ReadLine(); // Takes Course code input from user
 
+            if (!Courses.ContainsKey(courseCode)) // Check if the course exists
+            {
+                Console.WriteLine($"Course {courseCode} does not exist.");
+                return;
+            }
+
+            Console.Write("Enter the student's name: ");
+            string studentName = Console.ReadLine();
+
+            if (Courses.ContainsKey(studentName)) // Checks if students name exist in the course
+            {
+                Courses[courseCode].Remove(studentName); // Remove student from teh course
+                Console.WriteLine($"{studentName} has been removed from {courseCode}.");
+            }
         }
 
         static void DisplayStudentsInCourse()
