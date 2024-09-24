@@ -1,4 +1,6 @@
-﻿namespace Dictionary_Task
+﻿using static System.Reflection.Metadata.BlobBuilder;
+
+namespace Dictionary_Task
 {
     internal class Program
     {
@@ -6,9 +8,6 @@
         static Dictionary<string, HashSet<string>> Courses = new Dictionary<string, HashSet<string>>();
         static Dictionary<string, int> CoursesCapacities = new Dictionary<string, int>();
         static List<(string CourseCode, string StudentName)> WaitList = new List<(string CourseCode, string StudentName)> ();
-
-        static string CoursesFile = "C:\\Users\\Codeline User\\Documents\\Codeline Projects\\Files\\CoursesFile.txt";
-        static string WaitingListFile = "C:\\Users\\Codeline User\\Documents\\Codeline Projects\\Files\\WaitingListFile.txt";
 
 
         static void InitializeStartupData()
@@ -22,7 +21,7 @@
 
             // Set course capacities (varying)
             CoursesCapacities["CS101"] = 3;   // CS101 capacity of 3 (currently full)
-            CoursesCapacities["MATH202"] = 5; // MATH202 capacity of 5 (can accept more students)
+            CoursesCapacities["MATH202"] = 4; // MATH202 capacity of 5 (can accept more students)
             CoursesCapacities["ENG303"] = 3;  // ENG303 capacity of 3 (currently full)
             CoursesCapacities["BIO404"] = 4;  // BIO404 capacity of 4 (can accept more students)
 
@@ -38,9 +37,11 @@
         static void Main(string[] args)
         {
             InitializeStartupData();
+            //LoadCoursesFile();
+            //LoadWaitingListFile();
             MainMenu();
-            SaveCoursesToFile();
-            SaveStudentToWaitList();
+            //SaveCoursesToFile();
+            //SaveStudentToWaitList();
         }
 
         static void MainMenu()
@@ -48,7 +49,7 @@
             bool ExitFlag = false;
 
         do
-            {
+            { 
                 Console.WriteLine("\nPlease select one of the following options:");
                 Console.WriteLine("\n1. Add a new course");
                 Console.WriteLine("\n2. Remove Course");
@@ -65,7 +66,7 @@
 
                 if (int.TryParse(Console.ReadLine(), out Choice))
                 {
-                    Console.WriteLine("Welcome to system");
+                    Console.WriteLine("Welcome to the system");
                 }
 
                 else
@@ -112,8 +113,8 @@
                         break;
 
                     case 10:
-                        SaveCoursesToFile();
                         ExitFlag = true;
+                        Console.WriteLine("Exiting the program");
                         break;
 
                     default:
@@ -170,6 +171,7 @@
             Courses.Remove(courseCode); //Delete the Course Code
             CoursesCapacities.Remove(courseCode); // Delete the Course Capacity
             Console.WriteLine($"Course {courseCode} has been removed."); // Confirmation Message
+
         }
 
 
@@ -188,17 +190,16 @@
             Console.Write("Enter the student's name: ");
             string studentName = Console.ReadLine();
 
-            // Check if the course capacity is full
-            if (Courses[courseCode].Count >= CoursesCapacities[courseCode])
+            
+            if (Courses[courseCode].Count >= CoursesCapacities[courseCode]) // Check if the course capacity is full
             {
-                // Add student to waiting list
-                WaitList.Add((courseCode, studentName));
+                
+                WaitList.Add((courseCode, studentName)); // Adds student to waiting list
                 Console.WriteLine($"Course {courseCode} is full. {studentName} has been added to the waiting list.");
             }
             else
             {
-                // Enroll the student to the course
-                Courses[courseCode].Add(studentName);
+                Courses[courseCode].Add(studentName); // Enroll the student to the course
                 Console.WriteLine($"{studentName} has been enrolled in {courseCode}.");
             }
         }
@@ -218,7 +219,7 @@
             Console.Write("Enter the student's name: ");
             string studentName = Console.ReadLine();
 
-            if (Courses.ContainsKey(studentName)) // Checks if students name exist in the course
+            if (Courses[courseCode].Contains(studentName)) // Checks if students name exist in the course
             {
                 Courses[courseCode].Remove(studentName); // Remove student from the course
                 Console.WriteLine($"{studentName} has been removed from {courseCode}.");
@@ -319,33 +320,6 @@
             {
                 Console.WriteLine($"Student: {wait.StudentName}, Waiting for: {wait.CourseCode}");
             }
-        }
-
-        static void SaveCoursesToFile()
-        {
-            // Save courses and their students to the CoursesFile
-            using (StreamWriter writer = new StreamWriter(CoursesFile))
-            {
-                foreach (var course in Courses)
-                {
-                    string courseCode = course.Key;
-                    HashSet<string> students = course.Value;
-                    writer.WriteLine($"{courseCode}:{string.Join(",", students)}");
-                }
-            }
-        }
-
-        static void SaveStudentToWaitList()
-        {
-            // Save waitlist to the WaitingListFile
-            using (StreamWriter writer = new StreamWriter(WaitingListFile))
-            {
-                foreach (var Student in WaitList)
-                {
-                    writer.WriteLine($"{Student.CourseCode}:{Student.StudentName}");
-                }
-            }
-
         }
 
     }
