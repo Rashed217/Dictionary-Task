@@ -4,11 +4,36 @@
     {
 
         static Dictionary<string, HashSet<string>> Courses = new Dictionary<string, HashSet<string>>();
-        static Dictionary<string, int> CourseCapacity = new Dictionary<string, int>();
+        static Dictionary<string, int> CoursesCapacities = new Dictionary<string, int>();
         static List<(string CourseCode, string StudenName)> WaitList = new List<(string CourseCode, string StudentName)> ();
 
         static string CoursesFile = "C:\\Users\\Codeline User\\Documents\\Codeline Projects\\Files\\CoursesFile.txt";
         static string WaitingListFile = "C:\\Users\\Codeline User\\Documents\\Codeline Projects\\Files\\WaitingListFile.txt";
+
+
+        static void InitializeStartupData()
+        {
+            // Example data: Courses and their enrolled students (cross-over students)
+            Courses["CS101"] = new HashSet<string> { "Alice", "Bob", "Charlie" };   // CS101 has Alice, Bob, Charlie
+            Courses["MATH202"] = new HashSet<string> { "David", "Eva", "Bob" };     // MATH202 has David, Eva, and Bob (cross-over with CS101)
+            Courses["ENG303"] = new HashSet<string> { "Frank", "Grace", "Charlie" };// ENG303 has Frank, Grace, and Charlie (cross-over with CS101)
+            Courses["BIO404"] = new HashSet<string> { "Ivy", "Jack", "David" };     // BIO404 has Ivy, Jack, and David (cross-over with MATH202)
+
+
+            // Set course capacities (varying)
+            CoursesCapacities["CS101"] = 3;   // CS101 capacity of 3 (currently full)
+            CoursesCapacities["MATH202"] = 5; // MATH202 capacity of 5 (can accept more students)
+            CoursesCapacities["ENG303"] = 3;  // ENG303 capacity of 3 (currently full)
+            CoursesCapacities["BIO404"] = 4;  // BIO404 capacity of 4 (can accept more students)
+
+
+            // Waitlist for courses (students waiting to enroll in full courses)
+            WaitList.Add(("Helen", "CS101"));   // Helen waiting for CS101
+            WaitList.Add(("Jack", "ENG303"));   // Jack waiting for ENG303
+            WaitList.Add(("Alice", "BIO404"));  // Alice waiting for BIO404
+            WaitList.Add(("Eva", "ENG303"));    // Eva waiting for ENG303
+            Console.WriteLine("Startup data initialized.");
+        }
 
         static void Main(string[] args)
         {
@@ -94,7 +119,7 @@
             if (int.TryParse(Console.ReadLine(), out int capacity)) // Takes Course capacity input from user
             {
                 Courses[courseCode] = new HashSet<string>(); // Holds student registrations for the course
-                CourseCapacity[courseCode] = capacity; // Stores the capacity associated with the Course Code
+                CoursesCapacities[courseCode] = capacity; // Stores the capacity associated with the Course Code
                 Console.WriteLine($"Course {courseCode} added with capacity {capacity}."); // Confirmation Message
             }
             else
@@ -116,7 +141,7 @@
             }
 
             Courses.Remove(courseCode); //Delete the Course Code
-            CourseCapacity.Remove(courseCode); // Delete the Course Capacity
+            CoursesCapacities.Remove(courseCode); // Delete the Course Capacity
             Console.WriteLine($"Course {courseCode} has been removed."); // Confirmation Message
         }
 
@@ -137,7 +162,7 @@
             string studentName = Console.ReadLine();
 
             // Check if the course capacity is full
-            if (Courses[courseCode].Count >= CourseCapacity[courseCode])
+            if (Courses[courseCode].Count >= CoursesCapacities[courseCode])
             {
                 // Add student to waiting list
                 WaitList.Add((courseCode, studentName));
