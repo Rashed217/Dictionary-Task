@@ -279,9 +279,22 @@
             }
         }
 
-        static void WithdrawStudentFromALlCourses()
+        static void WithdrawStudentFromAllCourses()
         {
-            
+            Console.Clear();
+            Console.Write("Enter the student's name to withdraw: ");
+            string studentName = Console.ReadLine();
+
+            foreach (var course in Courses.Keys)
+            {
+                if (Courses[course].Remove(studentName))
+                {
+                    Console.WriteLine($"{studentName} has been withdrawn from {course}.");
+                }
+            }
+
+            WaitList.RemoveAll(w => w.StudentName.Equals(studentName, StringComparison.OrdinalIgnoreCase));
+            Console.WriteLine($"{studentName} has been removed from the waiting list if they were present.");
         }
 
         static void ViewWaitingList()
