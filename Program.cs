@@ -28,6 +28,7 @@
             Console.WriteLine("\n6. Display all courses and their students:");
             Console.WriteLine("\n7. Find courses with common students:");
             Console.WriteLine("\n8. Withdraw a Student from All Courses:");
+            Console.WriteLine("\n9. View waiting list:");
 
             int Choice;
             Choice = int.Parse(Console.ReadLine());
@@ -64,6 +65,10 @@
 
                 case 7:
                     WithdrawStudentFromALlCourses();
+                    break;
+
+                case 8:
+                    ViewWaitingList();
                     break;
 
                 default:
@@ -184,6 +189,11 @@
         }
 
         static void WithdrawStudentFromALlCourses()
+        {
+
+        }
+
+        static void ViewWaitingList()
         {
 
         }
