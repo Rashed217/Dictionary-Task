@@ -299,7 +299,12 @@
 
         static void ViewWaitingList()
         {
-
+            Console.Clear();
+            Console.WriteLine("Waiting List:");
+            foreach (var wait in WaitList)
+            {
+                Console.WriteLine($"Student: {wait.StudentName}, Waiting for: {wait.CourseCode}");
+            }
         }
 
         static void SaveCoursesToFile()
