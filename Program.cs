@@ -95,7 +95,7 @@
                         break;
 
                     case 8:
-                        WithdrawStudentFromALlCourses();
+                        WithdrawStudentFromAllCourses();
                         break;
 
                     case 9:
@@ -237,7 +237,7 @@
             
             foreach (var course in Courses)
             {
-                Console.WriteLine($"{course.Key}: {string.Join(", ", course.Value)}");
+                Console.WriteLine($"{course.Key}: {string.Join(", ", course.Value)}"); // Display all courses and their students
             }
         }
 
@@ -245,30 +245,30 @@
         {
             Console.Clear();
             Console.Write("Enter the first course code (e.g., CS101): ");
-            string courseCode1 = Console.ReadLine();
+            string courseCode1 = Console.ReadLine(); // Taking first course code from user
 
-            if (!Courses.ContainsKey(courseCode1))
+            if (!Courses.ContainsKey(courseCode1)) // Check if course code exists
             {
                 Console.WriteLine($"Course {courseCode1} does not exist.");
                 return;
             }
 
             Console.Write("Enter the second course code (e.g., CS101): ");
-            string courseCode2 = Console.ReadLine();
+            string courseCode2 = Console.ReadLine(); // Taking second course code from user
 
-            if (!Courses.ContainsKey(courseCode2))
+            if (!Courses.ContainsKey(courseCode2)) // Check if course code exists
             {
                 Console.WriteLine($"Course {courseCode2} does not exist.");
                 return;
             }
 
-            var commonStudents = new HashSet<string>(Courses[courseCode1]);
-            commonStudents.IntersectWith(Courses[courseCode2]);
+            var commonStudents = new HashSet<string>(Courses[courseCode1]); // Creating variable to store the students names from the HashSet of Course code 1
+            commonStudents.IntersectWith(Courses[courseCode2]); // Check if any student name from Course code 1 intersects with any student name from Course code 2
 
             Console.WriteLine($"Common students in {courseCode1} and {courseCode2}:");
             if (commonStudents.Count > 0)
             {
-                foreach (var student in commonStudents)
+                foreach (var student in commonStudents) // Printing each common students names from both courses if exists
                 {
                     Console.WriteLine(student);
                 }
@@ -285,15 +285,15 @@
             Console.Write("Enter the student's name to withdraw: ");
             string studentName = Console.ReadLine();
 
-            foreach (var course in Courses.Keys)
+            foreach (var course in Courses.Keys) // Iterates through all the course codes (keys) present in the (Courses) dictionary.
             {
-                if (Courses[course].Remove(studentName))
+                if (Courses[course].Remove(studentName)) // Remove the student name from the HashSet<string> associated with the current course.
                 {
                     Console.WriteLine($"{studentName} has been withdrawn from {course}.");
                 }
             }
 
-            WaitList.RemoveAll(w => w.StudentName.Equals(studentName, StringComparison.OrdinalIgnoreCase));
+            WaitList.RemoveAll(w => w.StudentName.Equals(studentName, StringComparison.OrdinalIgnoreCase)); // checks if the Student Name of any waitlist entry matches the student Name (case-insensitively).
             Console.WriteLine($"{studentName} has been removed from the waiting list if they were present.");
         }
 
@@ -319,7 +319,6 @@
                     writer.WriteLine($"{courseCode}:{string.Join(",", students)}");
                 }
             }
-
         }
 
         static void SaveStudentToWaitList()
