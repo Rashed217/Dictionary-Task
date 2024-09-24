@@ -28,10 +28,10 @@
 
 
             // Waitlist for courses (students waiting to enroll in full courses)
-            WaitList.Add(("Helen", "CS101"));   // Helen waiting for CS101
-            WaitList.Add(("Jack", "ENG303"));   // Jack waiting for ENG303
-            WaitList.Add(("Alice", "BIO404"));  // Alice waiting for BIO404
-            WaitList.Add(("Eva", "ENG303"));    // Eva waiting for ENG303
+            WaitList.Add(("CS101", "Helen"));   // Helen waiting for CS101
+            WaitList.Add(("ENG303", "Jack"));   // Jack waiting for ENG303
+            WaitList.Add(("BIO404", "Alice"));  // Alice waiting for BIO404
+            WaitList.Add(("ENG303", "Eva"));    // Eva waiting for ENG303
             Console.WriteLine("Startup data initialized.");
         }
 
@@ -62,7 +62,16 @@
                 Console.WriteLine("\n10. Exit the program");
 
                 int Choice;
-                Choice = int.Parse(Console.ReadLine());
+
+                if (int.TryParse(Console.ReadLine(), out Choice))
+                {
+                    Console.WriteLine("Welcome to system");
+                }
+
+                else
+                {
+                    Console.WriteLine("Invalid choice. Please enter a valid number.");
+                }
 
                 switch (Choice)
                 {
