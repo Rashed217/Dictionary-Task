@@ -45,63 +45,75 @@
 
         static void MainMenu()
         {
-            Console.WriteLine("\nPlease select one of the following options:");
-            Console.WriteLine("\n1. Add a new course:");
-            Console.WriteLine("\n2. Remove Course :");
-            Console.WriteLine("\n3. Enroll a student in a course:");
-            Console.WriteLine("\n4. Remove a student from a course:");
-            Console.WriteLine("\n5. Display all students in a course:");
-            Console.WriteLine("\n6. Display all courses and their students:");
-            Console.WriteLine("\n7. Find courses with common students:");
-            Console.WriteLine("\n8. Withdraw a Student from All Courses:");
-            Console.WriteLine("\n9. View waiting list:");
+            bool ExitFlag = false;
 
-            int Choice;
-            Choice = int.Parse(Console.ReadLine());
-
-            switch( Choice )
+        do
             {
-                case 0:
-                    AddNewCourse();
-                    break;
+                Console.WriteLine("\nPlease select one of the following options:");
+                Console.WriteLine("\n1. Add a new course");
+                Console.WriteLine("\n2. Remove Course");
+                Console.WriteLine("\n3. Enroll a student in a course");
+                Console.WriteLine("\n4. Remove a student from a course");
+                Console.WriteLine("\n5. Display all students in a course");
+                Console.WriteLine("\n6. Display all courses and their students");
+                Console.WriteLine("\n7. Find courses with common students");
+                Console.WriteLine("\n8. Withdraw a Student from All Courses");
+                Console.WriteLine("\n9. View waiting list");
+                Console.WriteLine("\n10. Exit the program");
 
-                case 1:
-                    RemoveCourse();
-                    break;
+                int Choice;
+                Choice = int.Parse(Console.ReadLine());
 
-                case 2:
-                    EnrollStudentInCourse();
-                    break;
+                switch (Choice)
+                {
+                    case 1:
+                        AddNewCourse();
+                        break;
 
-                case 3:
-                    RemoveStudentFromCourse();
-                    break;
+                    case 2:
+                        RemoveCourse();
+                        break;
 
-                case 4:
-                    DisplayStudentsInCourse();
-                    break;
+                    case 3:
+                        EnrollStudentInCourse();
+                        break;
 
-                case 5:
-                    DisplayAllCoursesAndStudents();
-                    break;
+                    case 4:
+                        RemoveStudentFromCourse();
+                        break;
 
-                case 6:
-                    FindCoursesWithCommonStudent();
-                    break;
+                    case 5:
+                        DisplayStudentsInCourse();
+                        break;
 
-                case 7:
-                    WithdrawStudentFromALlCourses();
-                    break;
+                    case 6:
+                        DisplayAllCoursesAndStudents();
+                        break;
 
-                case 8:
-                    ViewWaitingList();
-                    break;
+                    case 7:
+                        FindCoursesWithCommonStudent();
+                        break;
 
-                default:
-                    Console.WriteLine("Please enter a valid number.");
-                    break;
+                    case 8:
+                        WithdrawStudentFromALlCourses();
+                        break;
 
-            }
+                    case 9:
+                        ViewWaitingList();
+                        break;
+
+                    case 10:
+                        SaveCoursesToFile();
+                        ExitFlag = true;
+                        break;
+
+                    default:
+                        Console.WriteLine("Please enter a valid number.");
+                        break;
+
+                }
+            } while (!ExitFlag);
+            
         }
 
         static void AddNewCourse()
@@ -220,12 +232,19 @@
 
         static void DisplayAllCoursesAndStudents()
         {
-
+            Console.Clear();
+            Console.WriteLine("Here's All Students and Courses");
+            
+            foreach (var course in Courses)
+            {
+                Console.WriteLine($"{course.Key}: {string.Join(", ", course.Value)}");
+            }
         }
 
         static void FindCoursesWithCommonStudent()
         {
-
+           
+            
         }
 
         static void WithdrawStudentFromALlCourses()
@@ -264,7 +283,6 @@
                 }
             }
 
-            Console.WriteLine("Courses and waitlist have been saved to files.");
         }
 
     }
