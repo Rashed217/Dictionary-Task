@@ -223,6 +223,13 @@ namespace Dictionary_Task
             {
                 Courses[courseCode].Remove(studentName); // Remove student from the course
                 Console.WriteLine($"{studentName} has been removed from {courseCode}.");
+
+                EnrollFromWaitList();
+            }
+
+            else
+            {
+                Console.WriteLine($"{studentName} is not enrolled in {courseCode}.");
             }
         }
 
@@ -305,6 +312,8 @@ namespace Dictionary_Task
                 if (Courses[course].Remove(studentName)) // Remove the student name from the HashSet<string> associated with the current course.
                 {
                     Console.WriteLine($"{studentName} has been withdrawn from {course}.");
+
+                    EnrollFromWaitList();
                 }
             }
 
@@ -322,5 +331,18 @@ namespace Dictionary_Task
             }
         }
 
+        static void EnrollFromWaitList()
+        {
+            foreach (var courseCode in Courses.Keys)
+            {
+                while (Courses[courseCode].Count < CoursesCapacities[courseCode] && WaitList.Any(w => w.CourseCode == courseCode))
+                {
+                    var studentToEnroll = WaitList.First(w => w.CourseCode == courseCode);
+                    Courses[courseCode].Add(studentToEnroll.StudentName);
+                    WaitList.Remove(studentToEnroll);
+                    Console.WriteLine($"{studentToEnroll.StudentName} has been enrolled in {courseCode} from the waiting list.");
+                }
+            }
+        }
     }
 }
