@@ -5,7 +5,7 @@
 
         static Dictionary<string, HashSet<string>> Courses = new Dictionary<string, HashSet<string>>();
         static Dictionary<string, int> CoursesCapacities = new Dictionary<string, int>();
-        static List<(string CourseCode, string StudenName)> WaitList = new List<(string CourseCode, string StudentName)> ();
+        static List<(string CourseCode, string StudentName)> WaitList = new List<(string CourseCode, string StudentName)> ();
 
         static string CoursesFile = "C:\\Users\\Codeline User\\Documents\\Codeline Projects\\Files\\CoursesFile.txt";
         static string WaitingListFile = "C:\\Users\\Codeline User\\Documents\\Codeline Projects\\Files\\WaitingListFile.txt";
@@ -243,13 +243,45 @@
 
         static void FindCoursesWithCommonStudent()
         {
-           
-            
+            Console.Clear();
+            Console.Write("Enter the first course code (e.g., CS101): ");
+            string courseCode1 = Console.ReadLine();
+
+            if (!Courses.ContainsKey(courseCode1))
+            {
+                Console.WriteLine($"Course {courseCode1} does not exist.");
+                return;
+            }
+
+            Console.Write("Enter the second course code (e.g., CS101): ");
+            string courseCode2 = Console.ReadLine();
+
+            if (!Courses.ContainsKey(courseCode2))
+            {
+                Console.WriteLine($"Course {courseCode2} does not exist.");
+                return;
+            }
+
+            var commonStudents = new HashSet<string>(Courses[courseCode1]);
+            commonStudents.IntersectWith(Courses[courseCode2]);
+
+            Console.WriteLine($"Common students in {courseCode1} and {courseCode2}:");
+            if (commonStudents.Count > 0)
+            {
+                foreach (var student in commonStudents)
+                {
+                    Console.WriteLine(student);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No common students found.");
+            }
         }
 
         static void WithdrawStudentFromALlCourses()
         {
-
+            
         }
 
         static void ViewWaitingList()
@@ -279,7 +311,7 @@
             {
                 foreach (var Student in WaitList)
                 {
-                    writer.WriteLine($"{Student.CourseCode}:{Student.StudenName}");
+                    writer.WriteLine($"{Student.CourseCode}:{Student.StudentName}");
                 }
             }
 
