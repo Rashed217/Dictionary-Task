@@ -37,11 +37,7 @@ namespace Dictionary_Task
         static void Main(string[] args)
         {
             InitializeStartupData();
-            //LoadCoursesFile();
-            //LoadWaitingListFile();
             MainMenu();
-            //SaveCoursesToFile();
-            //SaveStudentToWaitList();
         }
 
         static void MainMenu()
@@ -154,7 +150,13 @@ namespace Dictionary_Task
         static void RemoveCourse()
         {
             Console.Clear();
+            foreach (var course in Courses)
+            {
+                Console.WriteLine($"{course.Key}");
+            }
+
             Console.Write("Enter the course code to remove (e.g., CS101): ");
+
             string courseCode = Console.ReadLine(); // Takes input from user
 
             if (!Courses.ContainsKey(courseCode)) // Checks if Course Code exist in the Dictionary
@@ -207,6 +209,12 @@ namespace Dictionary_Task
         static void RemoveStudentFromCourse()
         {
             Console.Clear();
+
+            foreach (var course in Courses)
+            {
+                Console.WriteLine($"{course.Key}: {string.Join(", ", course.Value)}"); // Display all courses and their students
+            }
+
             Console.Write("Enter the course code (e.g., CS101): ");
             string courseCode = Console.ReadLine(); // Takes Course code input from user
 
@@ -335,6 +343,8 @@ namespace Dictionary_Task
         {
             foreach (var courseCode in Courses.Keys)
             {
+                // Checks if the number of enrolled students in the course is less than its capacity.
+                // Checks if there are any students waiting for this specific course.
                 while (Courses[courseCode].Count < CoursesCapacities[courseCode] && WaitList.Any(w => w.CourseCode == courseCode))
                 {
                     var studentToEnroll = WaitList.First(w => w.CourseCode == courseCode);
